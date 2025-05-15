@@ -9,6 +9,7 @@ export interface Lancamento {
     tipo: "receita" | "despesa";
     data: string;
     id: string;
+    
     categoria?: string;
 }
 
@@ -24,7 +25,7 @@ interface FinanceContextType {
     removeLancamento: (id: string) => void;
     categorias: CategoriaLimite[];
     addCategoria: (name: string, limit: number) => void;
-    getGastoPorCategoria: (categoria: number) => number;
+    getGastoPorCategoria: (categoria: string) => number;
     totalReceitas: number;
     totalDespesas: number;
 }
@@ -71,14 +72,14 @@ export function FinanceProvider({ children }: { children: ReactNode }) {
         }]);
     };
 
-    const getGastoPorCategoria = (categoria: string, month?: string): string => {
+    const getGastoPorCategoria = (categoria: string, month?: string): number => {
         const total = lancamentos
             .filter(l => l.tipo === "despesa"
                 && l.categoria === categoria
                 && (month ? format(new Date(l.data), 'yyyy-MM') === month : true))
             .reduce((total, l) => total + l.valor, 0);
 
-        return total.toString(); // or total.toFixed(2) for currency formatting
+        return total;
     };
 
     return (

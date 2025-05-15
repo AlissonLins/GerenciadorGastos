@@ -31,12 +31,7 @@ export default function Limites() {
         setNewLimit('');
     };
 
-    const formatCurrency = (value: number) => {
-        return value.toLocaleString('pt-BR', { 
-            style: 'currency', 
-            currency: 'BRL' 
-        });
-    };
+    
 
     const addCategory = () => {
         try {
@@ -67,7 +62,7 @@ export default function Limites() {
     };
 
     const monthYear = format(currentDate, "MMMM yyyy", { locale: ptBR });
-    const monthKey = format(currentDate, "yyyy-MM");
+
 
 
     return (
@@ -99,7 +94,7 @@ export default function Limites() {
                 {categorias.length > 0 ? (
                     <div className="space-y-4">
                         {categorias.map(category => {
-                            const gastoAtual = getGastoPorCategoria(category.id);
+                            const gastoAtual = getGastoPorCategoria(category.name);
                             const percentage = category.limit > 0
                                 ? Math.min(Math.round((gastoAtual / category.limit) * 100), 100)
                                 : 0;
